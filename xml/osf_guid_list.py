@@ -1,7 +1,7 @@
 import json
 
 import requests
-from config import LAC_NODE_ID, OSF_TOKEN
+from config import LAC_NODE_ID, OSF_TOKEN, NAME_GUID_FILE
 
 def getOSFStorageFiles(node_id=LAC_NODE_ID, url = False):
     headers={ 'Authorization': f'Bearer {OSF_TOKEN}' }
@@ -46,4 +46,4 @@ while next:
     else:
         next=False
 
-_store(data, 'name_guid.json')
+_store(data, NAME_GUID_FILE)
