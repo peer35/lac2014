@@ -19,8 +19,8 @@ for a in articles:
 
     TOC=f"{TOC}\n\n [{a['title']}](https://osf.io/{LAC_NODE_ID}/wiki/{id}).\n {', '.join(names)}"
 
-    article_md=f"## {a['title']}. ##\n  " \
-               f"LAC 2014 proceedings, [S.l.], oct. 2016.\n  " \
+    article_md=f"## {a['title']}. ##  \n" \
+               f"LAC 2014 proceedings, [S.l.], oct. 2016.  \n" \
                f" doi: https://dx.doi.org/{a['doi']}\n\n" \
                f"### Abstract ###\n{a['abstract']}\n\n" \
                f"[pdf](https://osf.io/{getGuid(id)})\n\n" \
@@ -28,7 +28,7 @@ for a in articles:
 
     with open(f"output/{id}.md", 'w', encoding="utf8") as f:
         f.write(article_md)
-    wiki.setPageContent(id, article_md)
+    wiki.setPageContent(name=id, content=article_md)
 
 
 with open("output/TOC.md", 'w', encoding="utf8") as f:
