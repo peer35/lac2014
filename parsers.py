@@ -6,6 +6,29 @@ import lxml
 def stripSpaces(str):
     return " ".join(str.split())
 
+def parseDoaj(xmlFile="xml/doaj.xml"):
+    with open(xmlFile, encoding="utf8") as fp:
+        soup = BeautifulSoup(fp, "xml")
+        articles = []
+        for r in soup.find_all("record"):
+            authors = []
+            for au in r.find_all("author"):
+                if au.affiliationId!=None:
+                    affiliation=r.find('affiliationName', {'affiliationId': au.affiliationId.string}).string
+                # name is reserved word
+                authors.append({'name': f'{au.find("name").string}', 'affiliation': stripSpaces(affiliation)})
+            abstract='\-'
+            if r.abstract!=None:
+                abstract=stripSpaces(r.abstract.string)
+            articles.append({
+                'title': stripSpaces(r.title.string),
+                'doi': r.doi.string,
+                'abstract': abstract,
+                'authors': authors
+            })
+        return articles
+
+
 def parsePubmed(xmlFile="xml/pubmed.xml"):
     with open(xmlFile, encoding="utf8") as fp:
         soup = BeautifulSoup(fp, "xml")

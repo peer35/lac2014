@@ -1,8 +1,8 @@
 from config import LAC_NODE_ID
-from parsers import parsePubmed, getGuid
+from parsers import parseDoaj, getGuid
 
-articles=parsePubmed('xml/pubmed.xml')
-
+articles=parseDoaj('xml/doaj.xml')
+print(articles)
 
 TOC=''
 for a in articles:
@@ -16,14 +16,14 @@ for a in articles:
 
     TOC=f"{TOC}\n\n [{a['title']}](https://osf.io/{LAC_NODE_ID}/wiki/{id}).\n {', '.join(names)}"
 
-    article_md=f"*{a['title']}.* LAC 2014 proceedings, [S.l.], p. 11, oct. 2016. doi: https://dx.doi.org/{a['doi']}\n\n" \
+    article_md=f"*{a['title']}.* LAC 2014 proceedings, [S.l.], oct. 2016. doi: https://dx.doi.org/{a['doi']}\n\n" \
                f"### Abstract ###\n{a['abstract']}\n\n" \
                f"[pdf](https://osf.io/{getGuid(id)})\n\n" \
                f"### Authors ####\n{author_block}"
 
-    with open(f"{id}.md", 'w', encoding="utf8") as f:
+    with open(f"output/{id}.md", 'w', encoding="utf8") as f:
         f.write(article_md)
 
 
-with open("TOC.md", 'w', encoding="utf8") as f:
+with open("output/TOC.md", 'w', encoding="utf8") as f:
     f.write(TOC)
