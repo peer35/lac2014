@@ -1,6 +1,6 @@
 import requests
 
-from config import LAC_NODE_ID, OSF_API_URL, OSF_TOKEN
+from config import OSF_NODE_ID, OSF_API_URL, OSF_TOKEN
 
 
 class osfWiki():
@@ -24,7 +24,7 @@ class osfWiki():
 
     def _retrieveWikisPage(self, page=1):
         headers = {'Authorization': f'Bearer {OSF_TOKEN}'}
-        res = requests.get(f'{OSF_API_URL}/nodes/{LAC_NODE_ID}/wikis/?page={page}', headers=headers)
+        res = requests.get(f'{OSF_API_URL}/nodes/{OSF_NODE_ID}/wikis/?page={page}', headers=headers)
         print(res.url)
         return res.json()
 
@@ -49,7 +49,7 @@ class osfWiki():
     def _createPage(self, name, content):
         headers = {'Authorization': f'Bearer {OSF_TOKEN}'}
         data = {'name': name, 'content': content, 'type': 'wikis'}
-        res = requests.post(f'{OSF_API_URL}/nodes/{LAC_NODE_ID}/wikis/', headers=headers, data=data)
+        res = requests.post(f'{OSF_API_URL}/nodes/{OSF_NODE_ID}/wikis/', headers=headers, data=data)
         return res.json()
 
     def setPageContent(self, name, content):

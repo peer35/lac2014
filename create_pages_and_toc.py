@@ -1,10 +1,10 @@
-from config import LAC_NODE_ID
+from config import OSF_NODE_ID, DOAJ_FILE
 from parsers import parseDoaj, getGuid
 from osf_wiki import osfWiki
 
 wiki = osfWiki()
 
-articles = parseDoaj('xml/doaj.xml')
+articles = parseDoaj(DOAJ_FILE)
 print(articles)
 
 TOC = ''
@@ -17,7 +17,7 @@ for a in articles:
     author_block = '\n\n'.join(authors_list)
     id = a['doi'].string[8:len(a['doi'])]
 
-    TOC = f"{TOC}\n\n [{a['title']}](https://osf.io/{LAC_NODE_ID}/wiki/{id}).\n {', '.join(names)}"
+    TOC = f"{TOC}\n\n [{a['title']}](https://osf.io/{OSF_NODE_ID}/wiki/{id}).\n {', '.join(names)}"
 
     article_md = f"## {a['title']}. ##  \n" \
                  f"LAC 2014 proceedings, [S.l.], oct. 2016.  \n" \
