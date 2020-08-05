@@ -1,14 +1,14 @@
 import json
 
 import requests
-from config import LAC_NODE_ID, OSF_TOKEN, NAME_GUID_FILE
+from config import LAC_NODE_ID, OSF_TOKEN, NAME_GUID_FILE, OSF_API_URL
 
 def getOSFStorageFiles(node_id=LAC_NODE_ID, url = False):
     headers={ 'Authorization': f'Bearer {OSF_TOKEN}' }
     if (url):
         res = requests.get(url, headers=headers)
     else:
-        res = requests.get(f'https://api.osf.io/v2/nodes/{node_id}/files/osfstorage?format=json', headers=headers)
+        res = requests.get(f'{OSF_API_URL}/nodes/{node_id}/files/osfstorage?format=json', headers=headers)
     print(res.url)
     return res.json()
 
