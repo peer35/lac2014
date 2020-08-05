@@ -8,6 +8,7 @@ articles = parseDoaj(DOAJ_FILE)
 print(articles)
 
 TOC = ''
+keywords = []
 for a in articles:
     names = []
     authors_list = []
@@ -23,12 +24,18 @@ for a in articles:
                  f"LAC 2014 proceedings, [S.l.], oct. 2016.  \n" \
                  f" doi: https://dx.doi.org/{a['doi']}\n\n" \
                  f"### Abstract ###\n{a['abstract']}\n\n" \
-                 f"[pdf](https://osf.io/{getGuid(id)})\n\n" \
+                 f"### Keywords: ###\n{', '.join(a['keywords'])}\n\n" \
+                 f"### Full Text: ###\n[pdf](https://osf.io/{getGuid(id)})\n\n" \
                  f"### Authors ####\n{author_block}"
 
     with open(f"output/{id}.md", 'w', encoding="utf8") as f:
         f.write(article_md)
     wiki.setPageContent(name=id, content=article_md)
+    for k in a['keywords']:
+        if k not in keywords:
+            keywords.append(k)
 
 with open("output/TOC.md", 'w', encoding="utf8") as f:
     f.write(TOC)
+
+print(",".join(keywords))

@@ -19,6 +19,9 @@ def parseDoaj(xmlFile="xml/doaj.xml"):
                     affiliation = r.find('affiliationName', {'affiliationId': au.affiliationId.string}).string
                 # name is reserved word
                 authors.append({'name': f'{au.find("name").string}', 'affiliation': stripSpaces(affiliation)})
+            keywords = []
+            if r.keywords.keyword!=None:
+                keywords = stripSpaces(r.keywords.keyword.string).split(', ')
             abstract = '\-'
             if r.abstract != None:
                 abstract = stripSpaces(r.abstract.string)
@@ -26,7 +29,8 @@ def parseDoaj(xmlFile="xml/doaj.xml"):
                 'title': stripSpaces(r.title.string),
                 'doi': r.doi.string,
                 'abstract': abstract,
-                'authors': authors
+                'authors': authors,
+                'keywords': keywords
             })
         return articles
 
